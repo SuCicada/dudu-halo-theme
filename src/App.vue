@@ -3,18 +3,18 @@
     <!--    <img src="./assets/logo.png">-->
     <!--    <router-link to="/test">Go to About</router-link>-->
     <!--    <router-view/>-->
-<!--    <nav class="light-blue lighten-1" role="navigation">-->
-<!--      <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>-->
-<!--        <ul class="right hide-on-med-and-down">-->
-<!--          <li><a href="#">Navbar Link</a></li>-->
-<!--        </ul>-->
+    <!--    <nav class="light-blue lighten-1" role="navigation">-->
+    <!--      <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>-->
+    <!--        <ul class="right hide-on-med-and-down">-->
+    <!--          <li><a href="#">Navbar Link</a></li>-->
+    <!--        </ul>-->
 
-<!--        <ul id="nav-mobile" class="sidenav">-->
-<!--          <li><a href="#">Navbar Link</a></li>-->
-<!--        </ul>-->
-<!--        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>-->
-<!--      </div>-->
-<!--    </nav>-->
+    <!--        <ul id="nav-mobile" class="sidenav">-->
+    <!--          <li><a href="#">Navbar Link</a></li>-->
+    <!--        </ul>-->
+    <!--        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>-->
+    <!--      </div>-->
+    <!--    </nav>-->
     <div class="section no-pad-bot" id="index-banner">
       <div class="container">
         <br><br>
@@ -39,7 +39,11 @@
         <div class="row">
           <div v-for="card in cards">
             <div class="col s12 m6">
-              <div class="icon-block">
+              <div class="post-card"
+                   :style="{
+        'background-image': `url(${require(card.img)})`,
+      }"
+              >
                 <h2 class="center light-blue-text"><i class="material-icons">{{ card.title }}</i></h2>
                 <h5 class="center">Speeds up development</h5>
                 <p class="light">{{ card.text }}</p>
@@ -120,4 +124,87 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+/*.post-card:before {*/
+/*  position: absolute;*/
+/*  z-index: 0;*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*  display: block;*/
+/*  left: 0;*/
+/*  top: 0;*/
+/*  content: "";*/
+/*  background-color: rgba(0, 0, 0, .3);*/
+/*  border-radius: 10px;*/
+/*}*/
+
+.post-card {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  max-height: 300px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  text-align: center;
+  border: 0;
+  border-radius: 10px;
+  color: rgba(0, 0, 0, .87);
+  background: #fff 50%;
+  background-size: cover;
+  box-shadow: 0 15px 35px rgba(50, 50, 93, .1);
+}
+
+.post-card .post-body {
+  position: relative;
+  margin: 0 auto;
+  padding: 1.8rem 1.25rem;
+  z-index: 2;
+}
+
+.post-card .post-categories {
+  margin: 10px auto;
+}
+
+.post-card .post-categories .category {
+  padding: 0 8px;
+  color: hsla(0, 0%, 100%, .7) !important;
+  font-size: .75rem;
+  font-weight: 500;
+}
+
+.post-card a {
+  color: #fff;
+}
+
+.post-card .post-title {
+  height: 48px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.post-card .post-description {
+  margin: 20px auto;
+  max-width: 500px;
+  height: 65px;
+  max-height: 65px;
+  font-size: 14px;
+  color: hsla(0, 0%, 100%, .78) !important;
+}
+
+.post-card .read-more {
+  height: 40px;
+  margin: .6rem 1px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 40px;
+  color: #fff;
+  border-radius: 30px;
+  box-shadow: 0 2px 2px 0 rgba(244, 67, 54, .14), 0 3px 1px -2px rgba(244, 67, 54, .2), 0 1px 5px 0 rgba(244, 67, 54, .12);
+}
+
+.post-card .read-more .icon {
+  font-size: 1.05rem;
+  padding-right: 10px;
+}
+
 </style>
