@@ -1,17 +1,20 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import router from './router'
+import {createApp} from 'vue'
+import {createRouter, createWebHistory} from 'vue-router'
+import routes from 'voie-pages'
 
-// Vue.config.productionTip = false
-
-
-// import 'material-design-icons/iconfont/material-icons.css'
-
-// import Vue from 'vue'
-import { createApp } from 'vue'
 // import './style.css'
 import App from './App.vue'
 
-createApp(App).mount('#app')
+const app = createApp(App)
+// const routes =
+const router = createRouter({
+  history: createWebHistory(),
+  routes: routes
+})
+
+app.use(router)
+
+app.mount('#app')
+
 import 'materialize-css/dist/css/materialize.css'
 import 'materialize-css/dist/js/materialize.js'
