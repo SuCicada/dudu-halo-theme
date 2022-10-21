@@ -25,7 +25,7 @@
         <div class="row center">
           <!--          <a href="http://materializecss.com/getting-started.html" id="download-button"-->
           <!--             class="btn-large waves-effect waves-light orange">Get Started</a>-->
-          <video class="responsive-video"  width="80%" height="" controls autoplay muted loop>
+          <video class="responsive-video" width="80%" height="" controls autoplay muted loop>
             <source src="https://www.runoob.com/try/demo_source/movie.mp4" type="video/mp4">
             <!--            <source src="movie.ogg" type="video/ogg">-->
             <!--            <source src="movie.webm" type="video/webm">-->
@@ -39,30 +39,37 @@
       </div>
     </div>
 
-
-    <div class="container">
-      <div class="section">
-
-        <!--   Icon Section   -->
-        <div class="row">
-          <div v-for="card in cards">
-            <div class="col s12 m6">
-              <div class="post-card"
-                   :style="{
+    <swiper
+      :slides-per-view="1"
+      :space-between="50"
+      @swiper="onSwiper"
+      @slideChange="onSlideChange"
+    >
+        <swiper-slide v-for="card_group in cards">
+          <div class="container">
+            <div class="section">
+              <!--   Icon Section   -->
+              <div class="row">
+                <div v-for="card in card_group">
+                  <div class="col s12 m6">
+                    <div class="post-card"
+                         :style="{
                       'background-image': `url(${(card.img)})`,
                       }"
-              >
-                <!--                <img :src="card.img" alt=""/>-->
-                <!--                <span class="card-title">Card Title</span>-->
-                <h2 class="post-title">{{ card.title }}</h2>
-                <p>{{ card.text }}</p>
+                    >
+                      <!--                <img :src="card.img" alt=""/>-->
+                      <!--                <span class="card-title">Card Title</span>-->
+                      <h2 class="post-title">{{ card.title }}</h2>
+                      <p>{{ card.text }}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+            <br><br>
           </div>
-        </div>
-      </div>
-      <br><br>
-    </div>
+        </swiper-slide>
+    </swiper>
 
     <a @click="click_a">click test</a>
     <!--    <test>nihao</test>-->
@@ -113,40 +120,56 @@
 
 <script>
 import {useRouter} from "vue-router";
+import {Swiper, SwiperSlide} from 'swiper/vue';
+import 'swiper/css';
+import {group} from "../utils/util";
 
 export default {
+
   name: "index",
+  components: {
+    Swiper,
+    SwiperSlide,
+  },
   created() {
-    M.toast({html: 'I am a toast!',displayLength:1000})
+    M.toast({html: 'I am a toast!', displayLength: 1000})
   },
   data() {
     let img = 'https://i.pinimg.com/originals/a1/20/ce/a120cef0ebee9dc3178213f89f725d6c.jpg'
-
-    return {
-      cards: [
-        {
-          title: '甚么',
-          text: '在以上实例中我们可以看到页面的背景颜色通过了很多的属性来控制。是地方',
-          img: img
-        },
-        {
-          title: 'flash_on', text: '我能吞下玻璃',
-          img: img
-        },
-        {title: '3', text: '名片sdf ', img: img},
-        {title: '4', text: 'vji', img: img},
-      ]
-    }
+    let cards = [
+      {
+        title: '甚么',
+        text: '在以上实例中我们可以看到页面的背景颜色通过了很多的属性来控制。是地方',
+        img: img
+      },
+      {
+        title: 'flash_on', text: '我能吞下玻璃',
+        img: img
+      },
+      {title: '3', text: '名片sdf ', img: img},
+      {title: '4', text: 'vji', img: img},
+      {title: '4', text: 'vji', img: img},
+      {title: '4', text: 'vji', img: img},
+      {title: '4', text: 'vji', img: img},
+    ]
+    cards = group(cards, 4)
+    console.log(cards)
+    return {cards: cards}
   },
   setup() {
     const router = useRouter()
-
+    const onSwiper = (swiper) => {
+      console.log(swiper);
+    };
+    const onSlideChange = () => {
+      console.log('slide change');
+    };
     return {
-      click_a(){
+      click_a() {
         router.push("/MyTest")
-      }
-
-
+      },
+      onSwiper,
+      onSlideChange,
     }
   }
 }
@@ -212,6 +235,7 @@ export default {
   font-size: 2.6em;
   text-align: right;
 }
+
 /*noformat*/
 .post-card p {
   /*position: absolute;*/
