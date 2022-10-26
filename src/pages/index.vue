@@ -1,20 +1,6 @@
 <template>
+<!--qqqqqqqqqqqqqqq-->
   <div id="app">
-    <!--    <img src="./assets/logo.png">-->
-    <!--    <router-link to="/test">Go to About</router-link>-->
-    <!--    <router-view/>-->
-    <!--    <nav class="light-blue lighten-1" role="navigation">-->
-    <!--      <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>-->
-    <!--        <ul class="right hide-on-med-and-down">-->
-    <!--          <li><a href="#">Navbar Link</a></li>-->
-    <!--        </ul>-->
-
-    <!--        <ul id="nav-mobile" class="sidenav">-->
-    <!--          <li><a href="#">Navbar Link</a></li>-->
-    <!--        </ul>-->
-    <!--        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>-->
-    <!--      </div>-->
-    <!--    </nav>-->
     <div class="section no-pad-bot" id="index-banner">
       <div class="container">
         <br><br>
@@ -40,96 +26,93 @@
     </div>
 
     <swiper
-      :slides-per-view="1"
-      :space-between="50"
+      :slides-per-view=1
+      :space-between=50
+      :keyboard="{
+        enabled: true,
+        onlyInViewport: false,
+      }"
+      :loop="true"
+      :pagination="{
+        clickable: true,
+      }"
+      :navigation="{
+        enabled: true,
+      }"
+      :modules="modules"
+      class="mySwiper"
+
       @swiper="onSwiper"
       @slideChange="onSlideChange"
     >
-        <swiper-slide v-for="card_group in cards">
-          <div class="container">
-            <div class="section">
-              <!--   Icon Section   -->
-              <div class="row">
-                <div v-for="card in card_group">
-                  <div class="col s12 m6">
-                    <div class="post-card"
-                         :style="{
+      <swiper-slide v-for="card_group in cards">
+        <div class="container">
+          <div class="section">
+            <!--   Icon Section   -->
+            <div class="row">
+              <div v-for="card in card_group">
+                <div class="col s12 m6">
+                  <div class="post-card"
+                       :style="{
                       'background-image': `url(${(card.img)})`,
                       }"
-                    >
-                      <!--                <img :src="card.img" alt=""/>-->
-                      <!--                <span class="card-title">Card Title</span>-->
-                      <h2 class="post-title">{{ card.title }}</h2>
-                      <p>{{ card.text }}</p>
-                    </div>
+                  >
+                    <!--                <img :src="card.img" alt=""/>-->
+                    <!--                <span class="card-title">Card Title</span>-->
+                    <h2 class="post-title">{{ card.title }}</h2>
+                    <p>{{ card.text }}</p>
                   </div>
                 </div>
               </div>
             </div>
-            <br><br>
           </div>
-        </swiper-slide>
+          <br><br>
+        </div>
+      </swiper-slide>
     </swiper>
 
     <a @click="click_a">click test</a>
     <!--    <test>nihao</test>-->
     <router-link to="/MyTest">Go to About</router-link>
-    <!--    <router-view></router-view>-->
-
-    <!--    <footer class="page-footer orange">-->
-    <!--      <div class="container">-->
-    <!--        <div class="row">-->
-    <!--          <div class="col l6 s12">-->
-    <!--            <h5 class="white-text">Company Bio</h5>-->
-    <!--            <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our-->
-    <!--              full time job. Any amount would help support and continue development on this project and is greatly-->
-    <!--              appreciated.</p>-->
-
-
-    <!--          </div>-->
-    <!--          <div class="col l3 s12">-->
-    <!--            <h5 class="white-text">Settings</h5>-->
-    <!--            <ul>-->
-    <!--              <li><a class="white-text" href="#!">Link 1</a></li>-->
-    <!--              <li><a class="white-text" href="#!">Link 2</a></li>-->
-    <!--              <li><a class="white-text" href="#!">Link 3</a></li>-->
-    <!--              <li><a class="white-text" href="#!">Link 4</a></li>-->
-    <!--            </ul>-->
-    <!--          </div>-->
-    <!--          <div class="col l3 s12">-->
-    <!--            <h5 class="white-text">Connect</h5>-->
-    <!--            <ul>-->
-    <!--              <li><a class="white-text" href="#!">Link 1</a></li>-->
-    <!--              <li><a class="white-text" href="#!">Link 2</a></li>-->
-    <!--              <li><a class="white-text" href="#!">Link 3</a></li>-->
-    <!--              <li><a class="white-text" href="#!">Link 4</a></li>-->
-    <!--            </ul>-->
-    <!--          </div>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--      <div class="footer-copyright">-->
-    <!--        <div class="container">-->
-    <!--          Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </footer>-->
-
   </div>
 
 </template>
 
 <script>
 import {useRouter} from "vue-router";
+import {group} from "../utils/util.ts";
+import M from "materialize-css"
+
+// swiper
+import { Keyboard, Pagination, Navigation } from "swiper";
 import {Swiper, SwiperSlide} from 'swiper/vue';
-import 'swiper/css';
-import {group} from "../utils/util";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "../assets/swiper.css"
 
 export default {
-
   name: "index",
   components: {
     Swiper,
     SwiperSlide,
+  },
+  setup() {
+    const router = useRouter()
+    const onSwiper = (swiper) => {
+      console.log(swiper);
+    };
+    const onSlideChange = () => {
+      console.log('slide change');
+    };
+    return {
+      click_a() {
+        router.push("/MyTest")
+      },
+      onSwiper,
+      onSlideChange,
+      modules: [Keyboard, Pagination, Navigation],
+    }
   },
   created() {
     M.toast({html: 'I am a toast!', displayLength: 1000})
@@ -155,22 +138,6 @@ export default {
     cards = group(cards, 4)
     console.log(cards)
     return {cards: cards}
-  },
-  setup() {
-    const router = useRouter()
-    const onSwiper = (swiper) => {
-      console.log(swiper);
-    };
-    const onSlideChange = () => {
-      console.log('slide change');
-    };
-    return {
-      click_a() {
-        router.push("/MyTest")
-      },
-      onSwiper,
-      onSlideChange,
-    }
   }
 }
 </script>

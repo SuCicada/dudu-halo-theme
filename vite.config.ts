@@ -11,6 +11,11 @@ export default defineConfig({
       dirs: "src/components",
       dts: true,
     }),
-    voie(),
-  ]
+    voie({
+      importMode(path) {
+        // Load index synchronously, all other pages are async.
+        console.log(path);
+        return path.includes('index') ? 'sync' : 'async';
+      },
+    }),  ]
 })
